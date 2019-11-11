@@ -6,6 +6,8 @@ project(Meta CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Export compilation data-base
 
 set(META_CXX_STD 11 CACHE STRING "C++ standard version.")
+set(META_BUILD_EXAMPLE OFF CACHE STRING "Build example.")
+set(META_BUILD_TEST OFF CACHE STRING "Build test.")
 
 add_library(meta INTERFACE)
 target_include_directories(meta INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>)
@@ -54,8 +56,13 @@ elseif(META_CXX_COMPILER_GCC)
 endif()
 
 add_subdirectory(doc)
-add_subdirectory(example)
-add_subdirectory(test)
+if (META_BUILD_EXAMPLE)
+  add_subdirectory(example)
+endif()
+
+if (META_BUILD_TEST)
+  add_subdirectory(test)
+endif()
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/scratch")
     add_subdirectory(scratch)
